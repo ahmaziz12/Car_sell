@@ -1,11 +1,10 @@
-<div  class="container d-flex justify-content-center flex-column" style="width:30%">
-<div class= "p-2">
+<div  class=" mt-5 container d-flex justify-content-center flex-column" style="width:30%">
+<div class= "d-flex justify-content-center p-2">
 <h2>Sign up</h2>
 </div>
-
   <div class= "p-2 input-grp">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
+    <%= render "devise/shared/error_messages", resource: resource %>
     <div class="mb-3">
       <%= f.label :email , class: "form-label "%>
       <%= f.email_field :email, autofocus: true, class: "form-control ",autocomplete: "email" %>
@@ -33,15 +32,15 @@
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control"%>
     </div>
 
-    <div class="actions mb-3">
+    <div class="actions mb-3 d-flex justify-content-center">
       <%= f.submit "Sign up", class: "btn btn-primary btn-lg btn-block"%>
     </div>
     <% end %>
   </div>
 
 
-     <div class="">
-      <span>Already a user? </span>
+     <div class=" d-flex justify-content-center">
+      <span class="me-2">Already a user? </span>
       <%= link_to "Sign in", new_user_session_path, class: "btn btn-secondary btn-sm"%>
     </div>
    
