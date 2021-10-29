@@ -1,14 +1,14 @@
 class User < ApplicationRecord
-  validates :username, length: { minimum:1, maximum: 30}
-  validates :phone, numericality: true, length: { minimum: 10, maximum: 15 }, uniqueness: true, allow_blank: true
-  validates_format_of :password, with: /^(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{8,}$/, multiline: true, message: "(minimum 8 characters with at least one capital letter and a special character)"
-  validates :email,  presence: true, if: -> { phone.blank? }
-  validates :phone,  presence: true, if: -> { email.blank? }
-
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable#, :secure_validatable
 
   attr_writer :login
+
+  validates :username, length: { minimum:1, maximum: 30}
+  validates :phone, numericality: true, length: { minimum: 10, maximum: 15 }, uniqueness: true, allow_blank: true
+  validates :password, format: {with: /\A(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{8,}\z/, multiline: true, message: "(minimum 8 characters with at least one capital letter and a special character)"}, allow_blank: true
+  validates :email,  presence: true, if: -> { phone.blank? }
+  validates :phone,  presence: true, if: -> { email.blank? }
 
   def login
     @login || self.phone || self.email
@@ -24,6 +24,7 @@ class User < ApplicationRecord
   end
 
   protected
+
   def email_required?
     true unless phone.present?
   end

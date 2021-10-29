@@ -14,6 +14,12 @@ gem 'devise'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'jquery-rails'
 
+gem "letter_opener", group: :development
+gem 'pg_search'
+gem "aws-sdk-s3", require: false
+
+
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
