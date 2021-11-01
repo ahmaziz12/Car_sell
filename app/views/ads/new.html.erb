@@ -1,0 +1,54 @@
+<div  class=" mt-5 container d-flex justify-content-center flex-column" style="width:30%">
+  <div class= "d-flex justify-content-center p-2">
+  <% if @ad.errors.any? %>
+      <h2>
+        <%= pluralize(@ad.errors.count, 'error') %>
+        Prohibited from saving user
+      </h2>
+    <ol>
+      <% @ad.errors.full_messages.each do |msg| %>
+        <li> <%= msg %></li>
+      <% end %>
+    </ol>
+    <%end%>
+  </div>
+
+  <div class= "p-2 input-grp">
+    <%= form_with(model: @ad, local: true) do |f| %>
+    <div class="mb-3">
+      <%= f.label :city, class: "form-label "%>
+      <%= f.select :city, Ad::CITIES, autofocus: true, type: "button", class: "btn btn-secondary dropdown-toggle" %>
+    </div>
+
+  <!--   <div class="mb-3 ">
+    <%= f.label :username , class: "form-label" %>
+    <%= f.text_field :username , class: "form-control"%>
+    </div>
+    <div class="mb-3">
+      <%= f.label :phone , class: "form-label" %>
+      <%= f.number_field :phone , class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :password  , class: "form-label"%>
+      <% if @minimum_password_length  %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br />
+      <%= f.password_field :password, autocomplete: "new-password" , class: "form-control"%>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :password_confirmation , class: "form-label" %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control"%>
+    </div> -->
+
+    <div class="actions mb-3 d-flex justify-content-center">
+      <%= f.submit "Submit Post", class: "btn btn-primary btn-lg btn-block"%>
+    </div>
+    <% end %>
+  </div>
+     <div class=" d-flex justify-content-center">
+      <span class="me-2">Already a user? </span>
+      <%= link_to "Sign in", new_user_session_path, class: "btn btn-secondary btn-sm"%>
+    </div>
+</div>

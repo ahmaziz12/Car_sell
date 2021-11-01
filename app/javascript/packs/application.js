@@ -7,6 +7,8 @@ import "channels"
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require activestorage
+
 
 Rails.start()
 Turbolinks.start()

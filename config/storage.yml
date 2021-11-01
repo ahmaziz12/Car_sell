@@ -21,6 +21,7 @@ amazon:
   secret_access_key: ""
   bucket: ""
   region: "" # e.g. 'us-east-1'
+  public: true
 
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
