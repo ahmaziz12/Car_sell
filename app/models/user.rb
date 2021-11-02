@@ -1,13 +1,13 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable#, :secure_validatable
+         :recoverable, :rememberable, :validatable
 
   attr_writer :login
-  PASSWORD_REGEX="/\A(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{8,}\z/"
+  PASSWORD_REGEX = /\A(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{8,}\z/
 
   validates :username, length: { minimum:1, maximum: 30}
   validates :phone, numericality: true, length: { minimum: 10, maximum: 15 }, uniqueness: true, allow_blank: true
-  validates :password, format: {with: PASSWORD_REGEX, multiline: true, message: "(minimum 8 characters with at least one capital letter and a special character)"}, allow_blank: true
+  validates :password, format: {with: PASSWORD_REGEX, message: "(minimum 8 characters with at least one capital letter and a special character)"}, allow_blank: true
   validates :email,  presence: true, if: -> { phone.blank? }
   validates :phone,  presence: true, if: -> { email.blank? }
 
@@ -29,5 +29,4 @@ class User < ApplicationRecord
   def email_required?
     true unless phone.present?
   end
-
 end
