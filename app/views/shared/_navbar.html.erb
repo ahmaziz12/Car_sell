@@ -6,8 +6,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
-       
+        <li class="nav-item">  
           <%= link_to "Home",root_path,class: "nav-link"%>
         </li>
       </ul>
@@ -17,20 +16,18 @@
         <% if user_signed_in? %>
           <li class="nav-item me-3">
           <%= link_to "update", edit_user_registration_path, class: "nav-link btn btn-primary text-light btn-sm"%>
-        </li>
-        <li class="nav-item me-3">
+          </li>
+          <li class="nav-item me-3">
           <%= link_to "Log Out", destroy_user_session_path ,method: "delete" , class: "nav-link btn btn-danger text-light btn-sm"%>
-        </li>
+          </li>
         <%else%>
-        <li class="nav-item me-3">
-          <%= link_to "Sign up", new_user_registration_path, class: "nav-link btn btn-primary text-light btn-sm"%>
-        </li>
-        <li class="nav-item me-5">
-          <%= link_to "Sign in", new_user_session_path , class: "nav-link btn btn-primary text-light btn-sm"%>
-        </li>
+          <li class="nav-item me-3">
+            <%= link_to "Sign up", new_user_registration_path, class: "nav-link btn btn-primary text-light btn-sm"%>
+          </li>
+          <li class="nav-item me-5">
+            <%= link_to "Sign in", new_user_session_path , class: "nav-link btn btn-primary text-light btn-sm"%>
+          </li>
         <%end%>
-        
-        
       </ul>
     </div>
   </div>
