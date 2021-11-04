@@ -2,5 +2,5 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-root to: 'ads#index'
+  root to: 'ads#index'
 end
