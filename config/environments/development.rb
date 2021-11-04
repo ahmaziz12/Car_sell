@@ -81,8 +81,4 @@ config.action_mailer.perform_deliveries = true
 config.active_storage.service = :local
 # config.active_storage.service = :amazon
 
-
-
-
-
 end

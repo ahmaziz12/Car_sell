@@ -10,12 +10,12 @@
         
         <div class="mb-3">
           <%= f.label :email , class: "form-label "%>
-          <%= f.email_field :email, autofocus: true, class: "form-control ",autocomplete: "email" %>
+          <%= f.email_field :email, autofocus: true, class: "form-control ",autocomplete: "email"  %>
         </div>
 
         <div class="mb-3 ">
           <%= f.label :username , class: "form-label" %>
-          <%= f.text_field :username , class: "form-control"%>
+          <%= f.text_field :username , class: "form-control" %>
         </div>
 
         <div class="mb-3">
@@ -24,26 +24,26 @@
         </div>
 
         <div class="mb-3">
-          <%= f.label :password  , class: "form-label"%>
+          <%= f.label :password  , class: "form-label" %>
           <% if @minimum_password_length  %>
             <em>(<%= @minimum_password_length %> characters minimum)</em>
           <% end %>
-          <%= f.password_field :password, autocomplete: "new-password" , class: "form-control"%>
+          <%= f.password_field :password, autocomplete: "new-password" , class: "form-control" %>
         </div>
 
         <div class="mb-3">
           <%= f.label :password_confirmation , class: "form-label" %><br />
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control"%>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
         </div>
 
         <div class="actions mb-3 d-flex justify-content-center">
-          <%= f.submit "Sign up", class: "btn btn-primary btn-lg btn-block"%>
+          <%= f.submit "Sign up", class: "btn btn-primary btn-lg btn-block" %>
         </div>
       <% end %>
     </div>
 
     <div class=" d-flex justify-content-center">
       <span class="me-2">Already a user? </span>
-      <%= link_to "Sign in", new_user_session_path, class: "btn btn-secondary btn-sm"%>
+      <%= link_to "Sign in", new_user_session_path, class: "btn btn-secondary btn-sm" %>
     </div>
   </div>

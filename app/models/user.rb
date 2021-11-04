@@ -3,6 +3,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   attr_writer :login
+
   PASSWORD_REGEX = /\A(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{8,}\z/
   PK_PHONE_REGEX = /^((\+92))-{0,1}\d{3}-{0,1}\d{7}$/
 
