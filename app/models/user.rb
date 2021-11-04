@@ -3,6 +3,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   attr_writer :login
+
   PASSWORD_REGEX = /\A(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{8,}\z/
 
   validates :username, length: { minimum:1, maximum: 30}
