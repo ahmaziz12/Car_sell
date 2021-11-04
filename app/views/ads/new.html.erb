@@ -1,54 +1,98 @@
-<div  class=" mt-5 container d-flex justify-content-center flex-column" style="width:30%">
-  <div class= "d-flex justify-content-center p-2">
-  <% if @ad.errors.any? %>
-      <h2>
-        <%= pluralize(@ad.errors.count, 'error') %>
-        Prohibited from saving user
-      </h2>
-    <ol>
-      <% @ad.errors.full_messages.each do |msg| %>
-        <li> <%= msg %></li>
+<div class="wrapper">
+  <div  class=" mt-5 mb-5 container d-flex justify-content-center flex-column">
+    <div class= "d-flex justify-content-center p-2">
+      <h2>Post an Ad</h2>
+    </div>
+
+    <div class= "p-2 input-grp">
+      <div>
+        <% if @ad.errors.any? %>
+            <h2>
+              <%= pluralize(@ad.errors.count, 'error') %>
+              Prohibited from saving user
+            </h2>
+          <ol>
+            <% @ad.errors.full_messages.each do |msg| %>
+              <li> <%= msg %></li>
+            <% end %>
+          </ol>
+          <%end%>
+      </div>
+      <%= form_with(model: @ad, local: true) do |f| %>
+
+      <div class="mb-3">
+        <%= f.label :city, class: "form-label me-1"%>
+        <%= f.select :city, Ad::CITIES, {}, autofocus: true, class: "form-control", required: true, prompt:"--Select--" %>
+      </div>
+
+       <div class="mb-3">
+        <%= f.label :milage , class: "form-label" %>
+        <%= f.text_field :milage , class: "form-control", placeholder: "in KM" ,required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :make, class: "form-label me-1" %>
+        <%= f.select :make, Ad::MAKE, {}, class: "form-control",required: true, prompt:"--Select--" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :price , class: "form-label" %>
+        <%= f.text_field :price , class: "form-control", placeholder: "in PKR",required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :engine_type, class: "form-label me-1" %>
+        <%= f.select :engine_type, Ad::ENGINE_TYPE, {}, class: "form-control",required: true, prompt:"--Select--" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :transmission, class: "form-label me-1" %>
+        <%= f.select :transmission, Ad::TRANSMISSION, {}, class: "form-control" ,required: true, prompt:"--Select--" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :capacity , class: "form-label" %>
+        <%= f.text_field :capacity , class: "form-control", placeholder: "in cc",required: true %>
+      </div>
+
+   <div class="mb-3">
+        <%= f.label :color, class: "form-label me-1" %>
+        <%= f.select :color, Ad::COLOR, {}, class: "form-control", required: true, prompt:"--Select--"  %>
+        <%= f.text_field :color , class: "form-control mt-2", hidden: true %>
+      </div>
+
+       <div class="mb-3">
+        <%= f.label :assembly, class: "form-label me-1" %>
+        <%= f.select :assembly, Ad::ASSEMBLY, {}, class: "form-control" ,required: true, prompt:"--Select--" %>
+      </div>
+
+      <div class="mb-3 ">
+      <%= f.label :description , class: "form-label" %>
+      <%= f.rich_text_area :description , class: "form-control",required: true %>
+      </div>
+
+       <div class="mb-3">
+        <%= f.label :image , class: "form-label" %>
+        <%= f.file_field :image, multiple: true, direct_upload: true %>
+      </div>
+
+       <div class="mb-3">
+        <%= f.label :secondary_contact , class: "form-label" %>
+        <%= f.text_field :secondary_contact , class: "form-control",required: true %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :featured , class: "form-label" %>
+        <%= f.check_box :featured%>
+      </div>
+
+      <div class="actions d-flex justify-content-center">
+        <%= f.submit "Submit Post", class: "btn btn-primary btn-lg btn-block" %>
+      </div>
       <% end %>
-    </ol>
-    <%end%>
+    </div>
+    <div class="mb-3 d-flex justify-content-center">
+     <div>
+     <%= link_to "Back", :back, class: "btn btn-secondary btn-sm btn-block mt-4" %>
+   </div>
   </div>
-
-  <div class= "p-2 input-grp">
-    <%= form_with(model: @ad, local: true) do |f| %>
-    <div class="mb-3">
-      <%= f.label :city, class: "form-label "%>
-      <%= f.select :city, Ad::CITIES, autofocus: true, type: "button", class: "btn btn-secondary dropdown-toggle" %>
-    </div>
-
-  <!--   <div class="mb-3 ">
-    <%= f.label :username , class: "form-label" %>
-    <%= f.text_field :username , class: "form-control"%>
-    </div>
-    <div class="mb-3">
-      <%= f.label :phone , class: "form-label" %>
-      <%= f.number_field :phone , class: "form-control" %>
-    </div>
-
-    <div class="mb-3">
-      <%= f.label :password  , class: "form-label"%>
-      <% if @minimum_password_length  %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em>
-      <% end %><br />
-      <%= f.password_field :password, autocomplete: "new-password" , class: "form-control"%>
-    </div>
-
-    <div class="mb-3">
-      <%= f.label :password_confirmation , class: "form-label" %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control"%>
-    </div> -->
-
-    <div class="actions mb-3 d-flex justify-content-center">
-      <%= f.submit "Submit Post", class: "btn btn-primary btn-lg btn-block"%>
-    </div>
-    <% end %>
-  </div>
-     <div class=" d-flex justify-content-center">
-      <span class="me-2">Already a user? </span>
-      <%= link_to "Sign in", new_user_session_path, class: "btn btn-secondary btn-sm"%>
-    </div>
 </div>

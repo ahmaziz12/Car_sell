@@ -1,6 +1,6 @@
 class AdsController < ApplicationController
   def index
-    @ads=Ad.all
+    @ads= Ad.all
   end
 
   def new
@@ -13,7 +13,8 @@ class AdsController < ApplicationController
 
   def create
     @ad = Ad.new(ad_parameter)
-    if @ad.save
+    @ad.images.attach(params[:images])
+    if @ad.save && @ad.images.attached?
       redirect_to @ad, alert: 'You posted an Ad here!'
     else
       render 'new'
@@ -32,7 +33,7 @@ class AdsController < ApplicationController
 
   def update
     @ad = Ad.find(params[:id])
-    if @ad.update(user_parameter)
+    if @ad.update(ad_parameter)
       redirect_to @ad
     else
       render 'edit'
@@ -46,6 +47,6 @@ class AdsController < ApplicationController
   private
 
   def ad_parameter
-    params.require(:ad).permit(:make, :city, :price, :engine_type, :transmission, :color, :milage, :capacity, :assembly)
+    params.require(:ad).permit(:make, :city, :price, :engine_type, :transmission, :color, :milage, :capacity, :assembly,:featured, :description, :secondary_contact, images: [])
   end
 end

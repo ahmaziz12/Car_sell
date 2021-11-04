@@ -1,3 +1,4 @@
-.w-30{
-  width:30%;
+.wrapper {
+  max-width: 500px;
+  margin: 0 auto;
 }
