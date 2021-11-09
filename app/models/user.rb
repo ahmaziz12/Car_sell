@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Pay::Billable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 

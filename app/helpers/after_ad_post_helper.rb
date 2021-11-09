@@ -1,0 +1,2 @@
+module AfterAdPostHelper
+end

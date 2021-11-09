@@ -13,9 +13,8 @@ class AdsController < ApplicationController
 
   def create
     @ad = Ad.new(ad_parameter)
-    @ad.images.attach(params[:images])
-    if @ad.save && @ad.images.attached?
-      redirect_to @ad, alert: 'You posted an Ad here!'
+    if @ad.save
+      redirect_to after_ad_post_path(:second_step, ad: @ad)
     else
       render 'new'
     end
@@ -23,7 +22,7 @@ class AdsController < ApplicationController
 
   def destroy
     @ad = Ad.find(params[:id])
-    # @ad.destroy
+    @ad.destroy
     respond_to do |format|
       format.js
       format.html { redirect_to ads_path, notice: 'Post successfully deleted' }
@@ -47,6 +46,6 @@ class AdsController < ApplicationController
   private
 
   def ad_parameter
-    params.require(:ad).permit(:make, :city, :price, :engine_type, :transmission, :color, :milage, :capacity, :assembly,:featured, :description, :secondary_contact, images: [])
+    params.require(:ad).permit(:make, :city, :price, :engine_type, :transmission, :color, :milage, :capacity, :assembly,:featured, :description, :secondary_contact, :color_detail, images: [])
   end
 end

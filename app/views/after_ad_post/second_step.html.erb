@@ -1,0 +1,46 @@
+<div class="wrapper">
+  <div  class=" mt-5 mb-5 container d-flex justify-content-center flex-column">
+    <div class= "d-flex justify-content-center p-2">
+      <h2>Post an Ad</h2>
+    </div>
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 66%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class= "p-2 input-grp">
+      <%= form_with(model: @ad, local: true, method: :put, url: wizard_path) do |f| %>
+      <%= hidden_field_tag :ad_id, @ad.id %>
+       <div class="mb-3">
+        <%= f.label "first_image", class: "form-label" %>
+        <%= f.file_field :first_image,name: "ad[images][]", multiple: false, direct_upload: true %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :second_image, class: "form-label" %>
+        <%= f.file_field :second_image,name: "ad[images][]", multiple: false, direct_upload: true %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :third_image, class: "form-label" %>
+        <%= f.file_field :third_image,name: "ad[images][]", multiple: false, direct_upload: true %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :fourth_image, class: "form-label" %>
+        <%= f.file_field :fourth_image,name: "ad[images][]", multiple: false, direct_upload: true %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :fifth_image, class: "form-label" %>
+        <%= f.file_field :fifth_image,name: "ad[images][]", multiple: false, direct_upload: true %>
+      </div>
+      <div class="actions d-flex justify-content-center">
+        <%= f.submit "Save and Continue", class: "btn btn-primary btn-lg btn-block" %>
+      </div>
+      <% end %>
+    </div>
+    <div class="mb-3 d-flex justify-content-around">
+      <div>
+        <%= link_to "Previous", :back, class: "btn btn-secondary btn-sm btn-block mt-4" %>
+      </div>
+      <div>
+        <%= link_to 'skip', next_wizard_path(ad: @ad), class: "btn btn-secondary btn-sm btn-block mt-4"%>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+
+<div class="wrapper">
+  <div  class=" mt-5 mb-5 container d-flex justify-content-center flex-column">
+    <div class= "d-flex justify-content-center p-2">
+      <h2>Post an Ad third Step</h2>
+    </div>
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class= "p-2 input-grp">
+      <%= form_with(model: @ad, local: true) do |f| %>
+       <div class="mb-3">
+        <%= f.label :secondary_contact , class: "form-label" %>
+        <%= f.text_field :secondary_contact , class: "form-control", placeholder: "+92-3XX-XXXXXXX", required: true %>
+      </div>
+      <div class="mb-3">
+        <%= link_to "Feature your Post", "pay_path" , class: "btn btn-info btn-block mt-4" %>
+      </div>
+      <div class="actions d-flex justify-content-center">
+        <%= f.submit "Submit Post", class: "btn btn-primary btn-lg btn-block" %>
+      </div>
+      <% end %>
+    </div>
+    <div class="mb-3 d-flex justify-content-center">
+     <div>
+     <%= link_to 'previous', previous_wizard_path(ad: @ad), class: "btn btn-secondary btn-sm btn-block mt-4" %>
+   </div>
+  </div>
+</div>
