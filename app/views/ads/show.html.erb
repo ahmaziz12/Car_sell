@@ -21,8 +21,8 @@
 
 <div class='form-group'>
     <% if @ad.images.any? %>
-      <% @ad.images.each do |img|%>
-        <%= image_tag img.image, class: "img-thumbnail", style: "max-width: 250px; and height: auto;" %>
+      <% @ad.images.all.each do |img|%>
+        <%= image_tag img, class: "img-thumbnail", style: "max-width: 250px; and height: auto;" %>
       <% end %>
     <% end %>
   </div>

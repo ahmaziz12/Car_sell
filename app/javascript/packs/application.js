@@ -8,5 +8,6 @@ global.$ = jQuery;
 require("trix")
 require("@rails/actiontext")
 import 'bootstrap';
-//= require activestorage
 require("../ads")
+import ActiveStorageDragAndDrop from 'active_storage_drag_and_drop'
+ActiveStorageDragAndDrop.start()

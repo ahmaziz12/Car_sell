@@ -10,10 +10,10 @@ class Ad < ApplicationRecord
   ASSEMBLY = ["Local", "Imported"]
   PK_PHONE_REGEX = /^(\+92)-{0,1}\d{3}-{0,1}\d{7}$/
 
-  has_many :images
+  has_many_attached :images
   has_rich_text :description
 
-   validates_length_of :images, maximum: 5
+   validates_length_of :images, maximum: 5, message: "Maximum 5 images are allowed to add"
   validates :city, inclusion: { in: CITIES, message: "%{value} is invalid" }
   validates :make, inclusion: { in: MAKE, message: "%{value} is invalid" }
   validates :transmission, inclusion: { in: TRANSMISSION, message: "%{value} is invalid" }

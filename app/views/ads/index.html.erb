@@ -1,2 +1,16 @@
-<h2>Index page for Ads</h2>
-<%= link_to "New Ad", new_ad_path %>
+<div class="container">
+  <div>
+    <h2>Index page for Ads</h2>
+  </div>
+  <div class="mb-3">
+    <%= select_tag :make, options_for_select(Ad::MAKE), prompt:"Car Make/Model", class: "btn btn-secondary dropdown-toggle  w-25 me-3 ms-2 mt-3" %>
+    <%= select_tag :city, options_for_select(Ad::CITIES), prompt:"city", class: "btn btn-secondary dropdown-toggle w-25  me-3 ms-2 mt-3" %>
+    <%= select_tag :price, options_for_select(Ad::CITIES), prompt:"Price Range", class: "btn btn-secondary dropdown-toggle mw-100 w-25 me-3 ms-2 mt-3" %>
+    <%= select_tag :engine_type, options_for_select(Ad::ENGINE_TYPE), prompt:"Engine Details", class: "btn btn-secondary dropdown-toggle mw-100 w-25 me-3 ms-2 mt-3" %>
+    <%= select_tag :transmission, options_for_select(Ad::TRANSMISSION), prompt:"Transmission Type", class: "btn btn-secondary dropdown-toggle mw-100 w-25 me-3 ms-2 mt-3" %>
+    <%= select_tag :color, options_for_select(Ad::COLOR), prompt:"Color", class: "btn btn-secondary dropdown-toggle mw-100 w-25 me-3 ms-2 mt-3" %>
+    <%= select_tag :milage, options_for_select(Ad::CITIES), prompt:"Milage", class: "btn btn-secondary dropdown-toggle mw-100 w-25 me-3 ms-2 mt-3" %>
+    <%= select_tag :capacity, options_for_select(Ad::CITIES), prompt:"Engine Capacity", class: "btn btn-secondary dropdown-toggle mw-100 w-25 me-3 ms-2 mt-3" %>
+    <%= select_tag :assembly, options_for_select(Ad::ASSEMBLY), prompt:"Assembly Type", class: "btn btn-secondary dropdown-toggle mw-100 w-25 me-3 ms-2 mt-3" %>
+  </div>
+</div>

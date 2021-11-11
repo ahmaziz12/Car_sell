@@ -14,7 +14,7 @@ class AdsController < ApplicationController
   def create
     @ad = Ad.new(ad_parameter)
     if @ad.save
-      redirect_to after_ad_post_path(:second_step, ad: @ad)
+      redirect_to after_ad_post_path(:second_step, adv: @ad)
     else
       render 'new'
     end

@@ -20,8 +20,7 @@ gem 'wicked'
 gem 'braintree'
 gem 'pay'
 gem 'receipts'
-gem 'dropzonejs-rails'
-
+gem 'active_storage_drag_and_drop'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

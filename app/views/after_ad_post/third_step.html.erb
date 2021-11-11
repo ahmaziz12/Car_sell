@@ -8,6 +8,20 @@
       <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <div class= "p-2 input-grp">
+      <div>
+        <% if @ad.errors.any? %>
+            <h2>
+              <%= pluralize(@ad.errors.count, 'error') %>
+              Prohibited from saving user
+            </h2>
+          <ol>
+            <% @ad.errors.full_messages.each do |msg| %>
+              <li> <%= msg %></li>
+            <% end %>
+          </ol>
+          <%end%>
+      </div>
+      <%= flash[:alert] if flash[:alert] %>
       <%= form_with(model: @ad, local: true) do |f| %>
        <div class="mb-3">
         <%= f.label :secondary_contact , class: "form-label" %>
@@ -23,7 +37,7 @@
     </div>
     <div class="mb-3 d-flex justify-content-center">
      <div>
-     <%= link_to 'previous', previous_wizard_path(ad: @ad), class: "btn btn-secondary btn-sm btn-block mt-4" %>
+     <%= link_to 'previous', previous_wizard_path(adv: @ad), class: "btn btn-secondary btn-sm btn-block mt-4" %>
    </div>
   </div>
 </div>
