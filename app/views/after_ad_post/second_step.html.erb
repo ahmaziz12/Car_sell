@@ -11,7 +11,7 @@
         <% @ad.images.each do |img|%>
         <div class="ms-2 me-2">
           <div class="d-flex justify-content-center border border-primary ">
-            <%= link_to "X", after_ad_post_path(img: img, adv: @ad.id), method: :delete %>
+            <%= link_to "X", after_ad_post_path(img: img, ad_id: @ad.id), method: :delete %>
           </div>
           <div>
             <%= image_tag img, class: "img-w-90" %>
@@ -36,7 +36,7 @@
       </div>
       <%= flash[:alert] if flash[:alert] %>
       <%= form_with(model: @ad, local: true, method: :put, url: wizard_path) do |f| %>
-      <%= hidden_field_tag :adv, @ad.id %>
+      <%= hidden_field_tag :ad_id, @ad.id %>
        <div class="mb-4 mt-4">
          <%= f.drag_and_drop_file_field :images, nil, accept: 'image/png, image/jpeg, image/gif, image/tiff' %>
        </div>
@@ -50,7 +50,7 @@
         <%= link_to "Previous", :back, class: "btn btn-secondary btn-sm btn-block mt-4" %>
       </div>
       <div>
-        <%= link_to 'skip', next_wizard_path(adv: @ad), class: "btn btn-secondary btn-sm btn-block mt-4"%>
+        <%= link_to 'skip', next_wizard_path(ad_id: @ad), class: "btn btn-secondary btn-sm btn-block mt-4"%>
       </div>
     </div>
   </div>

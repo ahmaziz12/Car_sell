@@ -22,19 +22,19 @@
       </div>
       <%= flash[:alert] if flash[:alert] %>
       <%= form_with(model: @ad, local: true, method: :put, url: wizard_path) do |f| %>
-        <%= hidden_field_tag :adv, @ad.id %>
+        <%= hidden_field_tag :ad_id, @ad.id %>
         <% if @ad.featured? %>
           <div>
             <p>This ad is Featured!</p>
           </div>
         <% else %>
           <div class="mb-3">
-            <%= link_to "Feature your Ad", checkout_path(adv: @ad.id) , class: "btn btn-info btn-block text-light mt-4" %>
+            <%= link_to "Feature your Ad", checkout_path(ad_id: @ad.id) , class: "btn btn-info btn-block text-light mt-4" %>
           </div>
         <% end %>
         <div class="mb-3">
           <%= f.label :secondary_contact , class: "form-label" %>
-          <%= f.text_field :secondary_contact , class: "form-control", placeholder: "+92-3XX-XXXXXXX", required: true %>
+          <%= f.text_field :secondary_contact , class: "form-control", placeholder: "+92-3XX-XXXXXXX" %>
         </div>
         <div class="actions d-flex justify-content-center">
           <%= f.submit "Submit Post", class: "btn btn-primary btn-lg btn-block" %>
@@ -43,7 +43,7 @@
     </div>
     <div class="mb-3 d-flex justify-content-center">
       <div>
-        <%= link_to 'previous', previous_wizard_path(adv: @ad), class: "btn btn-secondary btn-sm btn-block mt-4" %>
+        <%= link_to 'previous', previous_wizard_path(ad_id: @ad), class: "btn btn-secondary btn-sm btn-block mt-4" %>
       </div>
     </div>
   </div>

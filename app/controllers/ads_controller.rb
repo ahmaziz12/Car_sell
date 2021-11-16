@@ -1,10 +1,13 @@
 class AdsController < ApplicationController
+  include Pagy::Backend
+
+  before_action :find_user_from_params, only: [:destroy, :edit, :update, :show, :open, :close]
 
   def index
     if(params[:ads] == "my_ads")
-      @ads = current_user.ads
+      @pagy, @ads = pagy(current_user.ads)
     else
-      @ads= Ad.all
+      @pagy, @ads = pagy(Ad.all)
     end
   end
 
@@ -12,21 +15,18 @@ class AdsController < ApplicationController
     @ad = Ad.new
   end
 
-  def edit
-    @ad = Ad.find(params[:id])
-  end
+  def edit; end
 
   def create
     @ad = current_user.ads.new(ad_parameter)
     if @ad.save
-      redirect_to after_ad_post_path(:second_step, adv: @ad)
+      redirect_to after_ad_post_path(:second_step, ad_id: @ad)
     else
       render 'new'
     end
   end
 
   def destroy
-    @ad = Ad.find(params[:id])
     @ad.destroy
     respond_to do |format|
       format.js
@@ -36,30 +36,30 @@ class AdsController < ApplicationController
   end
 
   def update
-    @ad = Ad.find(params[:id])
     if @ad.update(ad_parameter)
-      redirect_to after_ad_post_path(:second_step, adv: @ad)
+      redirect_to after_ad_post_path(:second_step, ad_id: @ad)
     else
       render 'edit'
     end
   end
 
-  def show
-    @ad = Ad.find(params[:id])
-  end
+  def show; end
 
   def close
-    @ad = Ad.find(params[:id])
     @ad.update(closed: "true")
     redirect_to ads_path
   end
 
   def open
-    @ad = Ad.find(params[:id])
     @ad.update(closed: "false")
     redirect_to ads_path
   end
+
   private
+
+  def find_user_from_params
+    @ad = Ad.find(params[:id])
+  end
 
   def ad_parameter
     params.require(:ad).permit(:make, :city, :price, :engine_type, :transmission, :color, :milage, :capacity, :assembly,:featured, :description, :secondary_contact, :color_detail, images: [])

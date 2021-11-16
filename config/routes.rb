@@ -11,9 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :after_ad_post
-  get 'checkout', to: 'checkouts#show'
-  get 'billing', to: 'billing#show'
-  resources :checkouts, only: :show do
+  resource :checkout, only: :show do
     collection do
       get :success
     end
