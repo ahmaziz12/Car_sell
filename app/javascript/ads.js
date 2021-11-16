@@ -9,8 +9,4 @@ $(document).on('turbolinks:load', function() {
       $('.color_detail').addClass("d-none")
     }
   });
-  function func()
-  {
-    alert("hellos");
-  }
 });

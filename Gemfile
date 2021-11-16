@@ -17,9 +17,9 @@ gem "letter_opener", group: :development
 gem 'pg_search'
 gem "aws-sdk-s3", require: false
 gem 'wicked'
-gem 'braintree'
-gem 'pay'
-gem 'receipts'
+gem 'stripe', '>= 2.8', '< 6.0'
+gem 'pay', '~> 3.0'
+gem 'receipts', '~> 1.1'
 gem 'active_storage_drag_and_drop'
 
 group :development, :test do

@@ -1,7 +1,4 @@
 <div class="container">
-  <div>
-    <h2>Index page for Ads</h2>
-  </div>
   <div class="mb-3">
     <%= select_tag :make, options_for_select(Ad::MAKE), prompt:"Car Make/Model", class: "btn btn-secondary dropdown-toggle  w-25 me-3 ms-2 mt-3" %>
     <%= select_tag :city, options_for_select(Ad::CITIES), prompt:"city", class: "btn btn-secondary dropdown-toggle w-25  me-3 ms-2 mt-3" %>
@@ -12,5 +9,76 @@
     <%= select_tag :milage, options_for_select(Ad::CITIES), prompt:"Milage", class: "btn btn-secondary dropdown-toggle mw-100 w-25 me-3 ms-2 mt-3" %>
     <%= select_tag :capacity, options_for_select(Ad::CITIES), prompt:"Engine Capacity", class: "btn btn-secondary dropdown-toggle mw-100 w-25 me-3 ms-2 mt-3" %>
     <%= select_tag :assembly, options_for_select(Ad::ASSEMBLY), prompt:"Assembly Type", class: "btn btn-secondary dropdown-toggle mw-100 w-25 me-3 ms-2 mt-3" %>
+  </div>
+  <div>
+    <% @ads.each do |ad|%>
+      <div class="container d-flex mb-3 mt-3 border border-primary rounded">
+        <div>
+          <% if ad.images.any? %>
+            <%= image_tag ad.images.first, class: "img-title" %>
+          <% end %>
+        </div>
+        <div class="mt-3 ms-4 border border-primary">
+          <% if ad.closed? %>
+            <div>
+              <p class="fw-bold text-danger ms-2">This Ad is Closed!</p>
+            </div>
+          <% end %>
+          <span class="ms-2 me-2 ">
+            <span class="fw-bold me-2">
+              Posted By:
+            </span>
+              Username: <%= ad.user.username %>
+          </span>
+          <span class = "ms-2 me-2" >
+            Email: <%= ad.user.email %>
+          </span>
+          <span class = "ms-2 me-2" >
+            Phone: <%= ad.user.phone %>
+          </span><br>
+          <span class="fw-bold ms-2 me-2">
+            Make: <%= ad.make %>
+          </span>
+          <span class = "ms-3 me-2" >
+            City: <%= ad.city %>
+          </span>
+          <span class = "ms-3 me-2" >
+            Engine Capacity: <%= ad.capacity %>
+          </span>
+          <span class="ms-2 me-2">
+            Price: <%= ad.price %> PKR
+          </span>
+          <br>
+          <span class="ms-2 me-2">
+            Transmission: <%= ad.transmission %> PKR
+          </span>
+          <p class="ms-2 me-2">
+            <%= ad.description %>
+          </p>
+        </div>
+        <div class="ms-5 mt-3 d-flex  border border-primary">
+          <div>
+            <%= link_to "Show", ad_path(ad), class: "btn btn-primary ms-2 me-2" %>
+          </div>
+          <% if ad.user == current_user %>
+            <div>
+              <%= link_to "Edit", edit_ad_path(ad), class: "btn btn-primary ms-2 me-2" %>
+            </div>
+            <div>
+              <%= link_to "Delete", ad_path(ad), method: :delete, class: "btn btn-danger ms-2 me-2" %>
+            </div>
+            <% if ad.closed? %>
+              <div>
+                <%= link_to "Activate", open_ad_path(ad), class: "btn btn-secondary ms-2 me-2" %>
+              </div>
+            <% else %>
+              <div>
+                <%= link_to "close", close_ad_path(ad), class: "btn btn-secondary ms-2 me-2" %>
+              </div>
+          <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

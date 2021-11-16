@@ -1,6 +1,11 @@
 class AdsController < ApplicationController
+
   def index
-    @ads= Ad.all
+    if(params[:ads] == "my_ads")
+      @ads = current_user.ads
+    else
+      @ads= Ad.all
+    end
   end
 
   def new
@@ -12,7 +17,7 @@ class AdsController < ApplicationController
   end
 
   def create
-    @ad = Ad.new(ad_parameter)
+    @ad = current_user.ads.new(ad_parameter)
     if @ad.save
       redirect_to after_ad_post_path(:second_step, adv: @ad)
     else
@@ -33,7 +38,7 @@ class AdsController < ApplicationController
   def update
     @ad = Ad.find(params[:id])
     if @ad.update(ad_parameter)
-      redirect_to @ad
+      redirect_to after_ad_post_path(:second_step, adv: @ad)
     else
       render 'edit'
     end
@@ -43,6 +48,17 @@ class AdsController < ApplicationController
     @ad = Ad.find(params[:id])
   end
 
+  def close
+    @ad = Ad.find(params[:id])
+    @ad.update(closed: "true")
+    redirect_to ads_path
+  end
+
+  def open
+    @ad = Ad.find(params[:id])
+    @ad.update(closed: "false")
+    redirect_to ads_path
+  end
   private
 
   def ad_parameter

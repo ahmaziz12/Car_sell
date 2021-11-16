@@ -1,0 +1,7 @@
+<h1>Checkouts</h1>
+<div>
+  <%= render partial: "pay/stripe/checkout_button", locals: {session: @checkout_session, title: "Checkout" } %>
+</div>
+<div>
+  <%= link_to "Back", :back, class: "btn btn-secondary btn-sm btn-block mt-4" %>
+</div>

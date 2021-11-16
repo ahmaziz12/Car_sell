@@ -23,13 +23,19 @@ class AfterAdPostController < ApplicationController
             render_wizard(@ad,{},adv: @ad)
           end
         when :third_step
-          @ad.update_attributes(:secondary_contact, :featured)
-          render_wizard(@ad,{},adv: @ad)
+          if @ad.update_attribute(:secondary_contact, params[:secondary_contact])
+            redirect_to @ad
+          else
+            render_wizard(@ad,{},adv: @ad)
+          end
       end
   end
 
-  # def pay
-  #   @ad.set_payment_processor :braintree
-  # end
+  def destroy
+    @ad = Ad.find(params[:adv])
+    @img = @ad.images.find(params[:img])
+    @img.purge
+    redirect_to after_ad_post_path(:second_step, adv: @ad), alert: "Image deleted successfully"
+  end
 
 end

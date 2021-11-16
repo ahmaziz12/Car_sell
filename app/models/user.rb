@@ -1,10 +1,11 @@
 class User < ApplicationRecord
-  # include Pay::Billable
+  pay_customer
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
   attr_writer :login
+  has_many :ads
 
   PASSWORD_REGEX = /\A(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{8,}\z/
   PK_PHONE_REGEX = /^((\+92))-{0,1}\d{3}-{0,1}\d{7}$/

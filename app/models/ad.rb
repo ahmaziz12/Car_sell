@@ -12,6 +12,7 @@ class Ad < ApplicationRecord
 
   has_many_attached :images
   has_rich_text :description
+  belongs_to :user
 
    validates_length_of :images, maximum: 5, message: "Maximum 5 images are allowed to add"
   validates :city, inclusion: { in: CITIES, message: "%{value} is invalid" }
