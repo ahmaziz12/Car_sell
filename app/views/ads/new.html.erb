@@ -23,7 +23,7 @@
       <%= form_with(model: @ad, local: true) do |f| %>
 
       <div class="mb-3">
-        <%= f.label :city, class: "form-label me-1"%>
+        <%= f.label :city, class: "form-label me-1" %>
         <%= f.select :city, Ad::CITIES, {}, autofocus: true, class: "form-control", required: true, prompt:"--Select--" %>
       </div>
 
