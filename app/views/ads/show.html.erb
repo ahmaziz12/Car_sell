@@ -5,26 +5,26 @@
 <br>
 
 <h3>City: 
-  <%= @ad.city%>
+  <%= @ad.city %>
 </h3> <br>
 
 <h3>Transmission: 
-  <%= @ad.transmission%>
+  <%= @ad.transmission %>
 </h3> <br>
 
 <h3>Featured: 
-  <%= @ad.featured%>
+  <%= @ad.featured %>
 </h3> <br>
 <h3>Description: 
-  <%= @ad.description%>
+  <%= @ad.description %>
 </h3> <br>
 
 <div class='form-group'>
   <% if @ad.images.any? %>
-    <% @ad.images.all.each do |img|%>
+    <% @ad.images.all.each do |img| %>
     <%= image_tag img, class: "img-thumbnail", style: "max-width: 250px; and height: auto;" %>
     <% end %>
   <% end %>
 </div>
 
-<%= link_to 'Back' ,ads_path%>
+<%= link_to 'Back' ,ads_path %>

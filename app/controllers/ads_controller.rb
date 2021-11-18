@@ -1,11 +1,17 @@
 class AdsController < ApplicationController
   include Pagy::Backend
 
-  before_action :find_user_from_params, only: [:destroy, :edit, :update, :show, :open, :close]
+  before_action :find_user, except: [:index, :new]
 
   def index
-    if(params[:ads] == "my_ads")
+    if params[:ads] == "my_ads"
       @pagy, @ads = pagy(current_user.ads)
+     elsif params[:ads] == "fav_ads"
+        @favourite_ads = Array.new()
+        current_user.favourites.each do |f|
+          @favourite_ads << f.ad
+        end
+        @pagy, @ads = pagy_array(@favourite_ads, items: Ad::ITEMS_PER_PAGE)
     else
       @pagy, @ads = pagy(Ad.all)
     end
@@ -55,9 +61,29 @@ class AdsController < ApplicationController
     redirect_to ads_path
   end
 
+  def favourite
+    fav = Favourite.new()
+    fav.user_id = current_user.id
+    fav.ad_id = params[:id]
+    if fav.save
+      flash[:notice] = "Ad added to Favorites"
+    else
+      flash[:alert] = "This ad is already marked as favourite"
+    end
+    redirect_to ads_path
+  end
+
+  def unfavourite
+    if Favourite.where(ad_id: params[:id]).destroy_all
+      flash[:notice] = "Ad removed from Favorites."
+    end
+
+    redirect_to ads_path
+  end
+
   private
 
-  def find_user_from_params
+  def find_user
     @ad = Ad.find(params[:id])
   end
 

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       get :close
       get :open
       get :favourite
+      get :unfavourite
     end
   end
 

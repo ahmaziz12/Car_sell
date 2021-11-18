@@ -9,18 +9,9 @@
     <div class= "p-2 input-grp">
       <div>
         <% if @ad.errors.any? %>
-            <h2>
-              <%= pluralize(@ad.errors.count, 'error') %>
-              Prohibited from saving user
-            </h2>
-          <ol>
-            <% @ad.errors.full_messages.each do |msg| %>
-              <li> <%= msg %></li>
-            <% end %>
-          </ol>
-        <%end%>
+                <%= render "shared/error_messages", resource: @ad %>
+        <% end %>
       </div>
-      <%= flash[:alert] if flash[:alert] %>
       <%= form_with(model: @ad, local: true, method: :put, url: wizard_path) do |f| %>
         <%= hidden_field_tag :ad_id, @ad.id %>
         <% if @ad.featured? %>

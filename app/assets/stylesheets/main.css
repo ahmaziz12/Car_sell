@@ -7,11 +7,9 @@
   max-width: 1500px;
   margin: 0 auto;
 }
-
 #asdndz-ad_images{
   max-width: 100%;
 }
-
 #myInput {
   padding: 20px;
   margin-top: -6px;
@@ -21,10 +19,16 @@
 }
 .img-title{
   max-width: 250px;
+  min-width: 250px;
   height: auto;"
 }
 .img-w-90
 {
   max-width: 90px;
   height: auto;"
+}
+.buttons-div
+{
+  max-width: 300px;
+  max-height: auto;
 }

@@ -16,14 +16,14 @@ class CheckoutsController < ApplicationController
 
   def success
     @ad_id = Stripe::Checkout::Session.retrieve(params[:session_id]).metadata.ad_id
-    @ad = set_ad(@ad_id)
+    set_ad(@ad.id)
     @ad.update(featured: true)
     redirect_to after_ad_post_path(:third_step, ad_id: @ad), alert: "Your Ad is successfully featured"
   end
 
   private
 
-  def set_ad(ad_id)
+  def set_ad
     @ad = current_user.ads.find(ad_id)
   end
 end

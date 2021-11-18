@@ -9,12 +9,15 @@ class Ad < ApplicationRecord
   COLOR = ["Black", "White","Other"]
   ASSEMBLY = ["Local", "Imported"]
   PK_PHONE_REGEX = /^(\+92)-{0,1}\d{3}-{0,1}\d{7}$/
+  ITEMS_PER_PAGE = 10.freeze
 
+  has_many :favourites, dependent: :destroy
+  has_many :users, through: :favourites
+  belongs_to :user
   has_many_attached :images
   has_rich_text :description
-  belongs_to :user
 
-  validates_length_of :images, maximum: 5, message: "Maximum 5 images are allowed to add"
+  validates :images, length: { maximum: 5 , message: "Maximum 5 images can be attatched" }
   validates :city, inclusion: { in: CITIES, message: "%{value} is invalid" }
   validates :make, inclusion: { in: MAKE, message: "%{value} is invalid" }
   validates :transmission, inclusion: { in: TRANSMISSION, message: "%{value} is invalid" }
@@ -25,7 +28,5 @@ class Ad < ApplicationRecord
   validates :milage, numericality: {only_integer: false}, presence: true
   validates :price, numericality: {only_integer: false}, presence: true
   validates :capacity, numericality: {only_integer: false}, presence: true
-
- 
 
 end
