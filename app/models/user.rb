@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   attr_writer :login
+
   has_many :ads, dependent: :destroy
   has_many :favourites, dependent: :destroy
   has_many :favourite_ads, through: :favourites, source: :ad

@@ -12,10 +12,9 @@ class AfterAdPostController < ApplicationController
   def update
     case step
     when :second_step
-      if params[:ad].present?
+      if params.dig(:ad, :images).present?
         @ad.images.attach(ad_images_params[:images])
         if @ad.errors[:images].present?
-          @ad.reload
           redirect_to after_ad_post_path(:second_step, ad_id: @ad), alert: @ad.errors.messages[:images].first
           return
         end

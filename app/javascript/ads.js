@@ -2,11 +2,11 @@ $(document).on('turbolinks:load', function() {
   $('.color_field').on('change', function() {
     if($(this).find(":selected").text() == "Other")
     {
-      $('.color_detail').removeClass("d-none")
+      $('.color_detail').removeClass("d-none");
     }
     else
     {
-      $('.color_detail').addClass("d-none")
+      $('.color_detail').addClass("d-none");
     }
   });
     var $temp = $("<input>");

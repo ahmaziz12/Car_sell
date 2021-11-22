@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   devise_for :users
   resources :ads do
     member do
-      get :close
-      get :open
+      patch :close
+      patch :open
       get :favourite
       get :unfavourite
     end

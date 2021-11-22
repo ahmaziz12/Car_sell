@@ -1,20 +1,17 @@
 class AdsController < ApplicationController
   include Pagy::Backend
 
-  before_action :find_user, except: [:index, :new, :create]
+  before_action :find_ad, except: [:index, :new, :create]
 
   def index
     if params[:ads] == "my_ads"
-      @pagy, @ads = pagy(current_user.ads)
-     elsif params[:ads] == "fav_ads"
-        @favourite_ads = Array.new()
-        current_user.favourites.each do |f|
-          @favourite_ads << f.ad
-        end
-        @pagy, @ads = pagy_array(@favourite_ads, items: Ad::ITEMS_PER_PAGE)
+      @ads = current_user.ads
+    elsif params[:ads] == "fav_ads"
+      @ads = current_user.favourite_ads
     else
-      @pagy, @ads = pagy(Ad.all)
+      @ads = Ad.all
     end
+    @pagy, @ads = pagy(@ads)
   end
 
   def new
@@ -24,7 +21,7 @@ class AdsController < ApplicationController
   def edit; end
 
   def create
-    @ad = current_user.ads.new(ad_parameter)
+    @ad = current_user.ads.new(ad_params)
     if @ad.save
       redirect_to after_ad_post_path(:second_step, ad_id: @ad)
     else
@@ -42,7 +39,7 @@ class AdsController < ApplicationController
   end
 
   def update
-    if @ad.update(ad_parameter)
+    if @ad.update(ad_params)
       redirect_to after_ad_post_path(:second_step, ad_id: @ad)
     else
       render 'edit'
@@ -52,19 +49,18 @@ class AdsController < ApplicationController
   def show; end
 
   def close
-    @ad.update(closed: "true")
+    @ad.update_attribute(:closed, true)
     redirect_back fallback_location: ads_path
   end
 
   def open
-    @ad.update(closed: "false")
+    @ad.update_attribute(:closed, false)
     redirect_back fallback_location: ads_path
   end
 
   def favourite
-    fav = Favourite.new()
-    fav.user_id = current_user.id
-    fav.ad_id = params[:id]
+
+    fav = current_user.favourites.build(ad_id: params[:id])
     if fav.save
       flash[:notice] = "Ad added to Favorites"
     else
@@ -74,19 +70,23 @@ class AdsController < ApplicationController
   end
 
   def unfavourite
-    if Favourite.where(ad_id: params[:id]).destroy_all
-      flash[:notice] = "Ad removed from Favorites."
+    favourite_obj = current_user.favourites.find_by_ad_id(params[:id])
+    if favourite_obj.present?
+      favourite_obj.destroy
+      if favourite_obj.destroyed?
+        flash[:notice] = "Ad removed from Favorites."
+      end
     end
     redirect_back fallback_location: ads_path
   end
 
   private
 
-  def find_user
+  def find_ad
     @ad = Ad.find(params[:id])
   end
 
-  def ad_parameter
+  def ad_params
     params.require(:ad).permit(:make, :city, :price, :engine_type, :transmission, :color, :milage, :capacity, :assembly,:featured, :description, :secondary_contact, :color_detail, images: [])
   end
 end

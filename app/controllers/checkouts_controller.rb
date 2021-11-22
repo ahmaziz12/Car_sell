@@ -1,13 +1,15 @@
 class CheckoutsController < ApplicationController
   before_action :authenticate_user!
 
+  ITEM = 'price_1Jut0vAfZA0eirmQ4xZHZwBp'
+
   def show
-    @ad= Ad.find(params[:ad_id])
+    @ad = Ad.find(params[:ad_id])
     current_user.set_payment_processor :stripe
     current_user.payment_processor.payment_method_token = params[:payment_method_token]
     @checkout_session = current_user.payment_processor.checkout(
       mode: "payment",
-      line_items: 'price_1Jut0vAfZA0eirmQ4xZHZwBp',
+      line_items: ITEM,
       metadata: { ad_id: params[:ad_id] },
       success_url: success_checkout_url,
       cancel_url: after_ad_post_url(:third_step, ad_id: @ad)
