@@ -9,4 +9,14 @@ $(document).on('turbolinks:load', function() {
       $('.color_detail').addClass("d-none")
     }
   });
+    var $temp = $("<input>");
+  var $url = $(location).attr('href');
+  $('#btn').click(function() {
+    $("body").append($temp);
+    $temp.val($url).select();
+    document.execCommand("copy");
+    $temp.remove();
+  });
 });
+
+

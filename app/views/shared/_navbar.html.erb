@@ -25,9 +25,15 @@
     <div class="d-flex justify-content-end">
       <ul class="navbar-nav">
         <% if user_signed_in? %>
-          <li class="nav-item me-3 pt-2">
-            <%= current_user.email %>
-          </li>
+          <% if current_user.email.present? %>
+            <li class="nav-item me-3 pt-2">
+              <%= current_user.email %>
+            </li>
+          <% else %>
+            <li class="nav-item me-3 pt-2">
+              <%= current_user.phone %>
+            </li>
+          <% end %>
           <li class="nav-item me-3">
           <%= link_to "update", edit_user_registration_path, class: "nav-link btn btn-primary text-light btn-sm"%>
           </li>

@@ -1,8 +1,17 @@
-<h1>Checkouts</h1>
-<div>
-  <%= render partial: "pay/stripe/checkout_button", locals: {session: @checkout_session, title: "Checkout" } %>
-</div>
-<div>
-  <%= link_to "Back", :back, class: "btn btn-secondary btn-sm btn-block mt-4" %>
+<div class="wrapper">
+    <div class="d-flex justify-content-center">
+      <h1>Checkouts</h1>
+    </div>
+  <div>
+    <p>Advertising plays significant role in the introduction of a new product in the market. It stimulates the people to purchase the product.</p>
+    <p>The fee for featuring an Ad is <span class="fw-bold">3000 PKR</span>!</p>
+    <p>To continue Press checkout!</p>
+  </div>
+  <div class="d-flex justify-content-center">
+    <%= render partial: "pay/stripe/checkout_button", locals: {session: @checkout_session, title: "Checkout" } %>
+  </div>
+  <div class="d-flex justify-content-center">
+    <%= link_to "Back", :back, class: "btn btn-secondary btn-sm btn-block mt-4" %>
+  </div>
 </div>
 <script src="https://js.stripe.com/v3/"></script>

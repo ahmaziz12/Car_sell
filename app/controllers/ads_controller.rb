@@ -1,7 +1,7 @@
 class AdsController < ApplicationController
   include Pagy::Backend
 
-  before_action :find_user, except: [:index, :new]
+  before_action :find_user, except: [:index, :new, :create]
 
   def index
     if params[:ads] == "my_ads"
@@ -53,12 +53,12 @@ class AdsController < ApplicationController
 
   def close
     @ad.update(closed: "true")
-    redirect_to ads_path
+    redirect_back fallback_location: ads_path
   end
 
   def open
     @ad.update(closed: "false")
-    redirect_to ads_path
+    redirect_back fallback_location: ads_path
   end
 
   def favourite
@@ -70,15 +70,14 @@ class AdsController < ApplicationController
     else
       flash[:alert] = "This ad is already marked as favourite"
     end
-    redirect_to ads_path
+    redirect_back fallback_location: ads_path
   end
 
   def unfavourite
     if Favourite.where(ad_id: params[:id]).destroy_all
       flash[:notice] = "Ad removed from Favorites."
     end
-
-    redirect_to ads_path
+    redirect_back fallback_location: ads_path
   end
 
   private

@@ -32,3 +32,13 @@
   max-width: 300px;
   max-height: auto;
 }
+.min-w-50
+{
+  min-width: 500px;
+  max-width: 500px;
+  max-height: 400px;
+  min-height: 400px;
+}
+.font-rem{
+  font-size: 1.6rem;
+}
