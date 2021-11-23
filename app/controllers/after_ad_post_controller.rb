@@ -44,6 +44,6 @@ class AfterAdPostController < ApplicationController
   end
 
   def find_ad
-    @ad = Ad.find(params[:ad_id])
+    @ad = Ad.find_by(params[:ad_id])
   end
 end

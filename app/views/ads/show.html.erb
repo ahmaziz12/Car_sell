@@ -13,9 +13,9 @@
     <div>
       <button id="btn" type="button" class="btn btn-light btn-sm">Copy Ad Link</button>
       <% if (user_signed_in? && current_user.favourite_ads.exists?(@ad.id)) %>
-        <%= link_to "Unfavourite", favourite_path(id: @ad), method: :delete, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
+        <%= link_to "Unfavourite", favourite_path(ad_id: @ad), method: :delete, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
       <% else %>
-        <%= link_to "Favourite", favourites_path(id: @ad), method: :post, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
+        <%= link_to "Favourite", favourite_path(ad_id: @ad), method: :post, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
     <% end %>
     </div>
   </div>

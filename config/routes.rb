@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       patch :activate
     end
   end
-  resources :favourites, only: [:create, :destroy]
+  resource :favourite, only: [:create, :destroy]
   resources :after_ad_post
   resource :checkout, only: :show do
     collection do

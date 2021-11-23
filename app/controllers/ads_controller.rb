@@ -1,5 +1,6 @@
 class AdsController < ApplicationController
   include Pagy::Backend
+
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_ad, except: [:index, :new, :create]
   before_action :verify_owner, only: [:destroy, :update, :activate, :deactivate, :edit]
@@ -47,7 +48,7 @@ class AdsController < ApplicationController
 
   def deactivate
     @ad.update_attribute(:closed, true)
-  redirect_back fallback_location: ads_path
+    redirect_back fallback_location: ads_path
   end
 
   def activate
@@ -58,14 +59,11 @@ class AdsController < ApplicationController
   private
 
   def find_ad
-    @ad = Ad.find(params[:id])
+    @ad = Ad.find_by(id: params[:id])
   end
 
   def verify_owner
-    if current_user != @ad.user
-      flash[:alert] = "This ad does not belongs to you"
-      redirect_to root_path
-    end
+    redirect_to root_path, alert: "This ad does not belongs to you" if current_user != @ad.user
   end
 
   def ad_params

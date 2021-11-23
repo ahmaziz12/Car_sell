@@ -3,7 +3,7 @@ class FavouritesController < ApplicationController
   before_action :find_ad, only: :destroy
 
   def create
-    favourite_obj = current_user.favourites.build(ad_id: params[:id])
+    favourite_obj = current_user.favourites.build(ad_id: params[:ad_id])
     if favourite_obj.save
       flash[:notice] = "Ad added to Favorites"
     else
@@ -23,7 +23,7 @@ class FavouritesController < ApplicationController
   private
 
   def find_ad
-    @favourite_obj = current_user.favourites.find_by_ad_id(params[:id])
+    @favourite_obj = current_user.favourites.find_by(ad_id: params[:ad_id])
     if @favourite_obj.nil?
       flash[:alert] = "This ad was not in favourites"
       redirect_back fallback_location ads_path
