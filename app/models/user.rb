@@ -13,8 +13,8 @@ class User < ApplicationRecord
   PASSWORD_REGEX = /\A(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{8,}\z/
   PK_PHONE_REGEX = /^((\+92))-{0,1}\d{3}-{0,1}\d{7}$/
 
-  validates :username, length: { minimum:1, maximum: 30}
-  validates :phone, format: {with: PK_PHONE_REGEX, message: "format should be +92-3XX-XXXXXXX", multiline: true}, uniqueness: true, allow_blank: true
+  validates :username, length: { minimum:1, maximum: 30 }
+  validates :phone, format: { with: PK_PHONE_REGEX, message: "format should be +92-3XX-XXXXXXX", multiline: true}, uniqueness: true, allow_blank: true
   validates :password, format: {with: PASSWORD_REGEX, message: "(minimum 8 characters with at least one capital letter and a special character)"}, allow_blank: true
   validates :email,  presence: true, if: -> { phone.blank? }
   validates :phone,  presence: true, if: -> { email.blank? }

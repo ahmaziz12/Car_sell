@@ -9,7 +9,7 @@ $(document).on('turbolinks:load', function() {
       $('.color_detail').addClass("d-none");
     }
   });
-    var $temp = $("<input>");
+  var $temp = $("<input>");
   var $url = $(location).attr('href');
   $('#btn').click(function() {
     $("body").append($temp);
@@ -18,5 +18,3 @@ $(document).on('turbolinks:load', function() {
     $temp.remove();
   });
 });
-
-

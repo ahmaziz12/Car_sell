@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mb-5">
   <div class="d-flex justify-content-center mt-3 mb-2">
      <h1>
           Ad Detail
@@ -12,11 +12,11 @@
     </div>
     <div>
       <button id="btn" type="button" class="btn btn-light btn-sm">Copy Ad Link</button>
-      <% if (current_user.favourite_ads.exists?(@ad.id)) %>
-        <%= link_to "Unfavourite", unfavourite_ad_path(@ad), class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
+      <% if (user_signed_in? && current_user.favourite_ads.exists?(@ad.id)) %>
+        <%= link_to "Unfavourite", favourite_path(id: @ad), method: :delete, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
       <% else %>
-        <%= link_to "Favourite", favourite_ad_path(@ad), class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
-      <% end %>
+        <%= link_to "Favourite", favourites_path(id: @ad), method: :post, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
+    <% end %>
     </div>
   </div>
   <div class="d-flex">
@@ -55,14 +55,21 @@
           <div class="ms-3 me-3 mb-2 mt-2"> <b>Capacity: </b><%= @ad.capacity %></div>
           <div class="ms-3 me-3 mb-2 mt-2"> <b>Color: </b><%= @ad.color %></div>
           <div class="ms-3 me-3 mb-2 mt-2"> <b>Assembly: </b><%= @ad.assembly %></div>
-          <% if @ad.user.phone.present? %>
-            <div class="ms-3 me-3 mb-2 mt-2"> <b>Primary Contact: </b><%= @ad.user.phone %></div>
-          <% end %>
-          <% if @ad.secondary_contact.present? %>
-            <div class="ms-3 me-3 mb-2 mt-2"> <b>Secondary Contact: </b><%= @ad.secondary_contact %></div>
-          <% end %>
       </div>
     </div>
   </div>
-  <%= link_to 'Back' ,ads_path %>
+  <div class="d-flex justify-content-center">
+    <div class="font-rem-4 mb-3">
+      <% if @ad.user.phone.present? %>
+        <div class="ms-3 me-3 mb-2 mt-2"> <b>Primary Contact: </b><a href = "tel: <%= @ad.user.phone %>">Call</a> <a href = "sms: <%= @ad.user.phone %>", class = "ms-2 me-2">Send Message</a><%= @ad.user.phone %></div>
+      <% end %>
+      <% if @ad.secondary_contact.present? %>
+        <div class="ms-3 me-3 mb-2 mt-2"> <b>Secondary Contact: </b> <a href = "tel: <%= @ad.secondary_contact %>">Call</a> <a href = "sms: <%= @ad.secondary_contact %>", class = "ms-2 me-2">Send Message</a><%= @ad.secondary_contact %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <%= link_to 'Back', ads_path, class: "btn btn-secondary btn-sm" %>
+  </div>
 </div>

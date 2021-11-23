@@ -1,7 +1,8 @@
 class AdsController < ApplicationController
   include Pagy::Backend
-
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :find_ad, except: [:index, :new, :create]
+  before_action :verify_owner, only: [:destroy, :update, :activate, :deactivate, :edit]
 
   def index
     if params[:ads] == "my_ads"
@@ -9,7 +10,7 @@ class AdsController < ApplicationController
     elsif params[:ads] == "fav_ads"
       @ads = current_user.favourite_ads
     else
-      @ads = Ad.all
+      @ads = Ad.active_ads
     end
     @pagy, @ads = pagy(@ads)
   end
@@ -31,11 +32,7 @@ class AdsController < ApplicationController
 
   def destroy
     @ad.destroy
-    respond_to do |format|
-      format.js
-      format.html { redirect_to ads_path, notice: 'Post successfully deleted' }
-      format.json { head :no_content }
-    end
+    redirect_to ads_path, notice: 'Post successfully deleted'
   end
 
   def update
@@ -48,35 +45,13 @@ class AdsController < ApplicationController
 
   def show; end
 
-  def close
+  def deactivate
     @ad.update_attribute(:closed, true)
-    redirect_back fallback_location: ads_path
+  redirect_back fallback_location: ads_path
   end
 
-  def open
+  def activate
     @ad.update_attribute(:closed, false)
-    redirect_back fallback_location: ads_path
-  end
-
-  def favourite
-
-    fav = current_user.favourites.build(ad_id: params[:id])
-    if fav.save
-      flash[:notice] = "Ad added to Favorites"
-    else
-      flash[:alert] = "This ad is already marked as favourite"
-    end
-    redirect_back fallback_location: ads_path
-  end
-
-  def unfavourite
-    favourite_obj = current_user.favourites.find_by_ad_id(params[:id])
-    if favourite_obj.present?
-      favourite_obj.destroy
-      if favourite_obj.destroyed?
-        flash[:notice] = "Ad removed from Favorites."
-      end
-    end
     redirect_back fallback_location: ads_path
   end
 
@@ -84,6 +59,13 @@ class AdsController < ApplicationController
 
   def find_ad
     @ad = Ad.find(params[:id])
+  end
+
+  def verify_owner
+    if current_user != @ad.user
+      flash[:alert] = "This ad does not belongs to you"
+      redirect_to root_path
+    end
   end
 
   def ad_params
