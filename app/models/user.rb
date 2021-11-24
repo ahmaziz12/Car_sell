@@ -1,13 +1,20 @@
 class User < ApplicationRecord
+  pay_customer
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
   attr_writer :login
 
-  PASSWORD_REGEX = /\A(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{8,}\z/
+  has_many :ads, dependent: :destroy
+  has_many :favourites, dependent: :destroy
+  has_many :favourite_ads, through: :favourites, source: :ad
 
-  validates :username, length: { minimum:1, maximum: 30}
-  validates :phone, numericality: true, length: { minimum: 10, maximum: 15 }, uniqueness: true, allow_blank: true
+  PASSWORD_REGEX = /\A(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{8,}\z/
+  PK_PHONE_REGEX = /^((\+92))-{0,1}\d{3}-{0,1}\d{7}$/
+
+  validates :username, length: { minimum:1, maximum: 30 }
+  validates :phone, format: { with: PK_PHONE_REGEX, message: "format should be +92-3XX-XXXXXXX", multiline: true}, uniqueness: true, allow_blank: true
   validates :password, format: {with: PASSWORD_REGEX, message: "(minimum 8 characters with at least one capital letter and a special character)"}, allow_blank: true
   validates :email,  presence: true, if: -> { phone.blank? }
   validates :phone,  presence: true, if: -> { email.blank? }

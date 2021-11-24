@@ -16,6 +16,13 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem "letter_opener", group: :development
 gem 'pg_search'
 gem "aws-sdk-s3", require: false
+gem 'wicked'
+gem 'stripe', '>= 2.8', '< 6.0'
+gem 'pay', '~> 3.0'
+gem 'receipts', '~> 1.1'
+gem 'active_storage_drag_and_drop'
+gem 'active_storage_validations'
+gem 'pagy'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
