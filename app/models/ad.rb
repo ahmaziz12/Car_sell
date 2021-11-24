@@ -2,13 +2,13 @@ class Ad < ApplicationRecord
   # include PgSearch::Model
   #   multisearchable against: [:make, :city, :price, :engine_type, :transmission, :color, :milage, :capacity, :assembly]
 
-  CITIES = ["Rawalpindi" , "Lahore" , "Quetta", "Karachi", "Peshawar", "Islamabad"]
-  MAKE = ["Suzuki", "Toyota", "Honda", "BMW"]
-  ENGINE_TYPE = ["Patrol", "Diesel", "Hybrid"]
-  TRANSMISSION = ["Manual", "Automatic"]
-  COLOR = ["Black", "White","Other"]
-  ASSEMBLY = ["Local", "Imported"]
-  PK_PHONE_REGEX = /^(\+92)-{0,1}\d{3}-{0,1}\d{7}$/
+  CITIES = ["Rawalpindi" , "Lahore" , "Quetta", "Karachi", "Peshawar", "Islamabad"].freeze
+  MAKE = ["Suzuki", "Toyota", "Honda", "BMW"].freeze
+  ENGINE_TYPE = ["Patrol", "Diesel", "Hybrid"].freeze
+  TRANSMISSION = ["Manual", "Automatic"].freeze
+  COLOR = ["Black", "White","Other"].freeze
+  ASSEMBLY = ["Local", "Imported"].freeze
+  PK_PHONE_REGEX = /^(\+92)-{0,1}\d{3}-{0,1}\d{7}$/.freeze
   ITEMS_PER_PAGE = 10.freeze
 
   has_many :favourites, dependent: :destroy
