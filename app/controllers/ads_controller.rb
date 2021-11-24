@@ -60,7 +60,7 @@ class AdsController < ApplicationController
 
   def find_ad
     @ad = Ad.find_by(id: params[:id])
-    redirect_to root_path, alert: "Ad not found", unless @ad
+    redirect_to root_path, alert: "Ad not found" unless @ad
   end
 
   def verify_owner
