@@ -1,0 +1,10 @@
+<% if @ad.user.phone.present? %>
+  <div class="ms-3 me-3 mb-2 mt-2">
+    <b>Primary Contact: </b><a href = "tel: <%= @ad.user.phone %>">Call</a> <a href = "sms: <%= @ad.user.phone %>", class = "ms-2 me-2">Send Message</a><%= @ad.user.phone %>
+  </div>
+<% end %>
+<% if @ad.secondary_contact.present? %>
+  <div class="ms-3 me-3 mb-2 mt-2">
+    <b>Secondary Contact: </b> <a href = "tel: <%= @ad.secondary_contact %>">Call</a> <a href = "sms: <%= @ad.secondary_contact %>", class = "ms-2 me-2">Send Message</a><%= @ad.secondary_contact %>
+  </div>
+<% end %>

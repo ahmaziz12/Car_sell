@@ -1,7 +1,8 @@
 class AdsController < ApplicationController
   include Pagy::Backend
 
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show, :contact_details]
+  before_action :authenticate!, only: [:contact_details]
   before_action :find_ad, except: [:index, :new, :create]
   before_action :verify_owner, only: [:destroy, :update, :activate, :deactivate, :edit]
 
@@ -13,6 +14,8 @@ class AdsController < ApplicationController
     else
       @ads = Ad.active_ads
     end
+    @ads = @ads.includes(:favourites, users: :favourite_ads)
+
     @pagy, @ads = pagy(@ads)
   end
 
@@ -54,6 +57,13 @@ class AdsController < ApplicationController
   def activate
     @ad.update_attribute(:closed, false)
     redirect_back fallback_location: ads_path
+  end
+
+  def contact_details
+    respond_to do |format|
+      format.js
+      format.html { render 'show' }
+    end
   end
 
   private

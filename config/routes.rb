@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     member do
       patch :deactivate
       patch :activate
+      get :contact_details
     end
   end
   resource :favourite, only: [:create, :destroy]

@@ -44,7 +44,7 @@ class AfterAdPostController < ApplicationController
   end
 
   def find_ad
-    @ad = Ad.find_by(params[:ad_id])
+    @ad = Ad.find_by(id: params[:ad_id])
     redirect_to root_path, alert: "Ad not found" unless @ad
   end
 end

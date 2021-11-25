@@ -1,8 +1,8 @@
 <div class="container mb-5">
   <div class="d-flex justify-content-center mt-3 mb-2">
-     <h1>
-          Ad Detail
-        </h1>
+    <h1>
+      Ad Detail
+    </h1>
   </div>
   <div class="d-flex justify-content-between">
     <div>
@@ -24,16 +24,12 @@
       <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" >
         <div class="carousel-inner min-w-50 mt-4 mb-5 ms-2 me-3">
           <% if @ad.images.any? %>
-              <% @ad.images.all.each do |img| %>
-              <% if img==@ad.images.first %>
-                <div class="carousel-item active">
-              <% else %>
-                <div class="carousel-item">
-              <% end %>
-                  <%= image_tag img, class: "d-block w-100" %>
-                  </div>
-              <% end %>
+            <% @ad.images.each_with_index do |img, index| %>
+              <div class="carousel-item <%= "active" if index.zero? %>">
+                <%= image_tag img, class: "d-block w-100" %>
+              </div>
             <% end %>
+          <% end %>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
@@ -42,33 +38,34 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
-                </div>
         </div>
       </div>
-      <div class="ms-5 mt-4 font-rem d-flex flex-wrap">
-          <div class="ms-3 me-3 mb-2 mt-2"> <b>City: </b><%= @ad.city %></div>
-          <div class="ms-3 me-3 mb-2 mt-2"> <b>Make: </b><%= @ad.make %></div>
-          <div class="ms-3 me-3 mb-2 mt-2"> <b>Milage: </b><%= @ad.milage %></div>
-          <div class="ms-3 me-3 mb-2 mt-2"> <b>Price: </b><%= @ad.price %></div>
-          <div class="ms-3 me-3 mb-2 mt-2"> <b>Engine Type: </b><%= @ad.engine_type %></div>
-          <div class="ms-3 me-3 mb-2 mt-2"> <b>Transmission: </b><%= @ad.transmission %></div>
-          <div class="ms-3 me-3 mb-2 mt-2"> <b>Capacity: </b><%= @ad.capacity %></div>
-          <div class="ms-3 me-3 mb-2 mt-2"> <b>Color: </b><%= @ad.color %></div>
-          <div class="ms-3 me-3 mb-2 mt-2"> <b>Assembly: </b><%= @ad.assembly %></div>
-      </div>
+    </div>
+    <div class="ms-5 mt-4 font-rem d-flex flex-wrap">
+      <div class="ms-3 me-3 mb-2 mt-2"> <b>City: </b><%= @ad.city %></div>
+      <div class="ms-3 me-3 mb-2 mt-2"> <b>Make: </b><%= @ad.make %></div>
+      <div class="ms-3 me-3 mb-2 mt-2"> <b>Milage: </b><%= @ad.milage %></div>
+      <div class="ms-3 me-3 mb-2 mt-2"> <b>Price: </b><%= @ad.price %></div>
+      <div class="ms-3 me-3 mb-2 mt-2"> <b>Engine Type: </b><%= @ad.engine_type %></div>
+      <div class="ms-3 me-3 mb-2 mt-2"> <b>Transmission: </b><%= @ad.transmission %></div>
+      <div class="ms-3 me-3 mb-2 mt-2"> <b>Capacity: </b><%= @ad.capacity %></div>
+      <% if @ad.color == "Other" %>
+        <div class="ms-3 me-3 mb-2 mt-2"> <b>Color: </b><%= @ad.color_detail %></div>
+      <% else %>
+        <div class="ms-3 me-3 mb-2 mt-2"> <b>Color: </b><%= @ad.color %></div>
+      <% end %>
+      <div class="ms-3 me-3 mb-2 mt-2"> <b>Assembly: </b><%= @ad.assembly %></div>
     </div>
   </div>
   <div class="d-flex justify-content-center">
-    <div class="font-rem-4 mb-3">
-      <% if @ad.user.phone.present? %>
-        <div class="ms-3 me-3 mb-2 mt-2"> <b>Primary Contact: </b><a href = "tel: <%= @ad.user.phone %>">Call</a> <a href = "sms: <%= @ad.user.phone %>", class = "ms-2 me-2">Send Message</a><%= @ad.user.phone %></div>
-      <% end %>
-      <% if @ad.secondary_contact.present? %>
-        <div class="ms-3 me-3 mb-2 mt-2"> <b>Secondary Contact: </b> <a href = "tel: <%= @ad.secondary_contact %>">Call</a> <a href = "sms: <%= @ad.secondary_contact %>", class = "ms-2 me-2">Send Message</a><%= @ad.secondary_contact %></div>
+    <div class="contact-info font-rem-4 mb-3" id="contact-info">
+      <% if @ad.secondary_contact? || @ad.user.phone? %>
+        <%= link_to "Show Contact Details", contact_details_ad_path, remote: true, class: "btn btn-success mx-auto btn-block btn-lg" %>
+      <% else %>
+        <span>No Contact is provided </span>
       <% end %>
     </div>
   </div>
-
   <div class="d-flex justify-content-center">
     <%= link_to 'Back', ads_path, class: "btn btn-secondary btn-sm" %>
   </div>
