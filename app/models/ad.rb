@@ -1,6 +1,5 @@
 class Ad < ApplicationRecord
-  # include PgSearch::Model
-  #   multisearchable against: [:make, :city, :price, :engine_type, :transmission, :color, :milage, :capacity, :assembly]
+  include PgSearch::Model
 
   CITIES = ["Rawalpindi" , "Lahore" , "Quetta", "Karachi", "Peshawar", "Islamabad"].freeze
   MAKE = ["Suzuki", "Toyota", "Honda", "BMW"].freeze
@@ -18,6 +17,12 @@ class Ad < ApplicationRecord
   has_rich_text :description
 
   scope :active_ads, -> { where(closed: [nil, false]) }
+  pg_search_scope :search_by_name, lambda { |key, query| [:make, :city, :price, :engine_type, :transmission, :color, :milage, :capacity, :assembly, :color_detail].include?(key)
+      {
+        against: key,
+        query: query
+      }
+    }
 
   validates :images, content_type: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'], limit: { max: 5, message: "Maximum 5 images can be attatched" }
   validates :city, inclusion: { in: CITIES }
