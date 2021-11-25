@@ -53,7 +53,11 @@
           <div class="ms-3 me-3 mb-2 mt-2"> <b>Engine Type: </b><%= @ad.engine_type %></div>
           <div class="ms-3 me-3 mb-2 mt-2"> <b>Transmission: </b><%= @ad.transmission %></div>
           <div class="ms-3 me-3 mb-2 mt-2"> <b>Capacity: </b><%= @ad.capacity %></div>
-          <div class="ms-3 me-3 mb-2 mt-2"> <b>Color: </b><%= @ad.color %></div>
+          <% if @ad.color == "Other" %>
+            <div class="ms-3 me-3 mb-2 mt-2"> <b>Color: </b><%= @ad.color_detail %></div>
+          <% else %>
+            <div class="ms-3 me-3 mb-2 mt-2"> <b>Color: </b><%= @ad.color %></div>
+          <% end %>
           <div class="ms-3 me-3 mb-2 mt-2"> <b>Assembly: </b><%= @ad.assembly %></div>
       </div>
     </div>
