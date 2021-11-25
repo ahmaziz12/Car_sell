@@ -2,7 +2,6 @@ class AdsController < ApplicationController
   include Pagy::Backend
 
   before_action :authenticate_user!, except: [:index, :show, :contact_details]
-  before_action :store_location, only: [:contact_details]
   before_action :authenticate!, only: [:contact_details]
   before_action :find_ad, except: [:index, :new, :create]
   before_action :verify_owner, only: [:destroy, :update, :activate, :deactivate, :edit]
@@ -15,6 +14,8 @@ class AdsController < ApplicationController
     else
       @ads = Ad.active_ads
     end
+    @ads = @ads.includes(:favourites, users: :favourite_ads)
+
     @pagy, @ads = pagy(@ads)
   end
 
@@ -61,18 +62,11 @@ class AdsController < ApplicationController
   def contact_details
     respond_to do |format|
       format.js
-      format.html { redirect_to @ad}
+      format.html { render 'show' }
     end
   end
 
   private
-
-  def authenticate!
-    unless user_signed_in?
-      flash[:alert] = "You need to sign in or sign up before continuing."
-      render :js => "window.location = '#{new_user_session_path}'"
-    end
-  end
 
   def find_ad
     @ad = Ad.find_by(id: params[:id])
