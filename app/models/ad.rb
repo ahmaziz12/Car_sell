@@ -1,6 +1,4 @@
 class Ad < ApplicationRecord
-  # include PgSearch::Model
-  #   multisearchable against: [:make, :city, :price, :engine_type, :transmission, :color, :milage, :capacity, :assembly]
 
   CITIES = ["Rawalpindi" , "Lahore" , "Quetta", "Karachi", "Peshawar", "Islamabad"].freeze
   MAKE = ["Suzuki", "Toyota", "Honda", "BMW"].freeze
