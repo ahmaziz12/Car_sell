@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-center mt-3 mb-2">
      <h1>
           Ad Detail
-        </h1>
+      </h1>
   </div>
   <div class="d-flex justify-content-between">
     <div>
@@ -59,13 +59,13 @@
     </div>
   </div>
   <div class="d-flex justify-content-center">
-    <div class="font-rem-4 mb-3">
-      <% if @ad.user.phone.present? %>
-        <div class="ms-3 me-3 mb-2 mt-2"> <b>Primary Contact: </b><a href = "tel: <%= @ad.user.phone %>">Call</a> <a href = "sms: <%= @ad.user.phone %>", class = "ms-2 me-2">Send Message</a><%= @ad.user.phone %></div>
+    <div class="contact-info font-rem-4 mb-3" id="contact-info">
+      <% if @ad.secondary_contact? || @ad.user.phone? %>
+        <%= link_to "Show Contact Details", contact_details_ad_path, remote: true, class: "btn btn-success mx-auto btn-block btn-lg" %>
+      <% else %>
+        <span>No Contact is provided </span>
       <% end %>
-      <% if @ad.secondary_contact.present? %>
-        <div class="ms-3 me-3 mb-2 mt-2"> <b>Secondary Contact: </b> <a href = "tel: <%= @ad.secondary_contact %>">Call</a> <a href = "sms: <%= @ad.secondary_contact %>", class = "ms-2 me-2">Send Message</a><%= @ad.secondary_contact %></div>
-      <% end %>
+
     </div>
   </div>
 

@@ -1,7 +1,9 @@
 class AdsController < ApplicationController
   include Pagy::Backend
 
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show, :contact_details]
+  before_action :store_location, only: [:contact_details]
+  before_action :authenticate!, only: [:contact_details]
   before_action :find_ad, except: [:index, :new, :create]
   before_action :verify_owner, only: [:destroy, :update, :activate, :deactivate, :edit]
 
@@ -56,11 +58,25 @@ class AdsController < ApplicationController
     redirect_back fallback_location: ads_path
   end
 
+  def contact_details
+    respond_to do |format|
+      format.js
+      format.html { redirect_to @ad}
+    end
+  end
+
   private
+
+  def authenticate!
+    unless user_signed_in?
+      flash[:alert] = "You need to sign in or sign up before continuing."
+      render :js => "window.location = '#{new_user_session_path}'"
+    end
+  end
 
   def find_ad
     @ad = Ad.find_by(id: params[:id])
-    redirect_to root_path, alert: "Ad not found", unless @ad
+    redirect_to root_path, alert: "Ad not found" unless @ad
   end
 
   def verify_owner
