@@ -12,11 +12,13 @@ class AdsController < ApplicationController
     elsif params[:ads] == "fav_ads"
       @ads = current_user.favourite_ads
     else
-      @ads = Ad.active_ads
+       @ads = Ad.active_ads
     end
     @ads = @ads.includes(:favourites, users: :favourite_ads)
-
+    @ads = AdSearchingService.new(params[:search], @ads).call if params[:search]
+    @tab = params[:ads]
     @pagy, @ads = pagy(@ads)
+     @tab = params[:ads]
   end
 
   def new

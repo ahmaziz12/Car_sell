@@ -45,3 +45,7 @@
 .font-rem-4{
   font-size: 1.2rem;
 }
+.field-width
+{
+  min-width: 950px;
+}

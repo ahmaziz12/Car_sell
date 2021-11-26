@@ -17,7 +17,7 @@ class Ad < ApplicationRecord
   has_rich_text :description
 
   scope :active_ads, -> { where(closed: [nil, false]) }
-  pg_search_scope :search_by_name, lambda { |key, query| [:make, :city, :price, :engine_type, :transmission, :color, :milage, :capacity, :assembly, :color_detail].include?(key)
+  pg_search_scope :search_ads, lambda { |key, query| [:make, :city, :engine_type, :transmission, :color, :milage, :capacity, :assembly, :color_detail].include?(key)
       {
         against: key,
         query: query
@@ -35,5 +35,7 @@ class Ad < ApplicationRecord
   validates :milage, numericality: { only_integer: false }, presence: true
   validates :price, numericality: { only_integer: false }, presence: true
   validates :capacity, numericality: { only_integer: false }, presence: true
+
+
 
 end

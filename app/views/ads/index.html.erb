@@ -1,6 +1,7 @@
 <div class="container">
   <div class="mb-3">
-    <%= form_with(model: @ad, local: true) do |f| %>
+    <%= form_for(:search, url: ads_path, method: :get) do |f| %>
+      <%= hidden_field_tag :ads, @tab %>
       <div class=" mb-2 d-flex ">
         <%= f.label :make , class: "form-label me-2"%>
         <%= f.select :make, Ad::MAKE, { include_blank: true }, class: "form-control w-25" %>
@@ -11,7 +12,7 @@
       </div>
       <div class="mb-3 d-flex">
         <%= f.label "Price Range" , class: "form-label me-2"%>
-        <%= f.select :peice , Ad::CITIES, { include_blank: true }, class: "form-control w-25" %>
+        <%= f.select :price , price_range, { include_blank: true }, class: "form-control w-25" %>
       </div>
       <div class="mb-3 d-flex">
         <%= f.label :engine_type , class: "form-label me-2"%>
@@ -47,9 +48,9 @@
   <div>
     <% @ads.each do |ad|%>
       <div class="container d-flex mb-3 mt-3 border border-primary rounded">
-        <div>
+        <div class="img-title">
           <% if ad.images.any? %>
-            <%= image_tag ad.images.first, class: "img-title" %>
+            <%= image_tag ad.images.first , class: "img-title"%>
           <% end %>
         </div>
         <div class="mt-3 ms-4 border border-primary">
@@ -84,7 +85,7 @@
           </span>
           <br>
           <span class="ms-2 me-2">
-            Transmission: <%= ad.transmission %> PKR
+            Transmission: <%= ad.transmission %>
           </span>
           <p class="ms-2 me-2">
             <%= ad.description %>
