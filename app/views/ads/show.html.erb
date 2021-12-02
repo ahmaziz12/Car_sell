@@ -11,6 +11,16 @@
       <% end %>
     </div>
     <div>
+      <% if @ad.user == current_user %>
+        <%= link_to "Edit", edit_ad_path(@ad), class: "btn btn-primary ms-2 me-2 mt-2 mb-2" %>
+
+        <%= link_to "Delete", ad_path(@ad), method: :delete, class: "btn btn-danger ms-2 me-2 mt-2 mb-2" %>
+        <% if @ad.closed? %>
+          <%= link_to "Activate", activate_ad_path(@ad), method: :patch, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
+        <% else %>
+          <%= link_to "close", deactivate_ad_path(@ad), method: :patch, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
+        <% end %>
+      <% end %>
       <button id="btn" type="button" class="btn btn-light btn-sm">Copy Ad Link</button>
       <% if (user_signed_in? && current_user.favourite_ads.exists?(@ad.id)) %>
         <%= link_to "Unfavourite", favourite_path(ad_id: @ad), method: :delete, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>

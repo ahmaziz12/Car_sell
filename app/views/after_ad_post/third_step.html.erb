@@ -27,6 +27,11 @@
           <%= f.label :secondary_contact , class: "form-label" %>
           <%= f.text_field :secondary_contact , class: "form-control", placeholder: "+92-3XX-XXXXXXX" %>
         </div>
+        <% if @ad.user.phone.blank? %>
+          <p>Your Primary contact is is not added, Please update your profile to add it. </p>
+        <% else %>
+          <p>Your Primary contact is <%= @ad.user.phone %> </p>
+        <% end %>
         <div class="actions d-flex justify-content-center">
           <%= f.submit "Submit Post", class: "btn btn-primary btn-lg btn-block" %>
         </div>
