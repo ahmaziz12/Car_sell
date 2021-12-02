@@ -11,7 +11,7 @@ class AdSearchingService
     filter_color
 
     @query_hash.compact_blank.each do |key, value|
-      @scope = @scope.search_ads(key.downcase, value.downcase)
+    @scope = @scope.search_ads(key.downcase, value.downcase)
     end
 
     @scope

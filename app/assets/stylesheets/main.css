@@ -17,40 +17,35 @@
   border-radius: 0;
   background: #f1f1f1;
 }
-.img-title{
+.img-title {
   max-width: 250px;
   min-width: 250px;
   height: auto;
 }
-.img-w-90
-{
+.img-w-90 {
   max-width: 90px;
   height: auto;
 }
-.buttons-div
-{
+.buttons-div {
   max-width: 300px;
   max-height: auto;
 }
-.min-w-50
-{
+.min-w-50 {
   min-width: 500px;
   max-width: 500px;
   max-height: 400px;
   min-height: 400px;
 }
-.font-rem{
+.font-rem {
   font-size: 1.6rem;
 }
-.font-rem-4{
+.font-rem-4 {
   font-size: 1.2rem;
 }
-.field-width
-{
+.field-width {
   min-width: 950px;
 }
-.detail-list
-{
+.detail-list {
   min-width: 850px;
   max-width: 850px;
 }
