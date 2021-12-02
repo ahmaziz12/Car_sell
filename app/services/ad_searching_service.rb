@@ -5,14 +5,16 @@ class AdSearchingService
   end
 
   def call
-    if @query_hash.present?
+    return scope if @query_hash.blank?
 
-      filter_price
-      filter_color
+    filter_price
+    filter_color
 
-      @query_hash.compact_blank.each { |key, value| @scope = @scope.search_ads(key.downcase, value.downcase) }
-      @scope
+    @query_hash.compact_blank.each do |key, value|
+      @scope = @scope.search_ads(key.downcase, value.downcase)
     end
+
+    @scope
   end
 
   def filter_price
@@ -34,6 +36,6 @@ class AdSearchingService
 
     @query_hash[:color_detail] = @query_hash[:color]
     @query_hash = @query_hash.except(:color)
-    end
+  end
 
 end

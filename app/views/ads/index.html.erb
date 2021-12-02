@@ -1,7 +1,7 @@
 <div class="container">
   <div class="mb-3">
     <%= form_for(:search, url: ads_path, method: :get) do |f| %>
-      <%= hidden_field_tag :ads, @tab %>
+      <%= hidden_field_tag :ads, params[:ads] %>
       <div class=" mb-2 d-flex ">
         <%= f.label :make , class: "form-label me-2"%>
         <%= f.select :make, Ad::MAKE, { include_blank: true }, class: "form-control w-25" %>
@@ -14,30 +14,33 @@
         <%= f.label "Price Range" , class: "form-label me-2"%>
         <%= f.select :price , price_range, { include_blank: true }, class: "form-control w-25" %>
       </div>
-      <div class="mb-3 d-flex">
-        <%= f.label :engine_type , class: "form-label me-2"%>
-        <%= f.select :engine_type, Ad::ENGINE_TYPE, { include_blank: true }, class: "form-control w-25" %>
+      <div id="Advanced-filters" class="d-none">
+        <div class="mb-3 d-flex">
+          <%= f.label :engine_type , class: "form-label me-2"%>
+          <%= f.select :engine_type, Ad::ENGINE_TYPE, { include_blank: true }, class: "form-control w-25" %>
+        </div>
+        <div class="mb-3 d-flex">
+          <%= f.label :transmission , class: "form-label me-2"%>
+          <%= f.select :transaction , Ad::TRANSMISSION, { include_blank: true }, class: "form-control w-25" %>
+        </div>
+        <div class="mb-3 d-flex">
+          <%= f.label :color , class: "form-label me-2"%>
+          <%= f.text_field :color, class: "form-control w-25" %>
+        </div>
+        <div class="mb-3 d-flex">
+          <%= f.label :milage , class: "form-label me-2"%>
+          <%= f.text_field :milage, class: "form-control w-25" %>
+        </div>
+        <div class="mb-3 d-flex">
+          <%= f.label :capacity , class: "form-label me-2"%>
+          <%= f.text_field :capacity, class: "form-control w-25" %>
+        </div>
+        <div class="mb-3 d-flex">
+          <%= f.label :assembly , class: "form-label me-2"%>
+          <%= f.select :assembly, Ad::ASSEMBLY, { include_blank: true }, class: "form-control w-25" %>
+        </div>
       </div>
-      <div class="mb-3 d-flex">
-        <%= f.label :transmission , class: "form-label me-2"%>
-        <%= f.select :transaction , Ad::TRANSMISSION, { include_blank: true }, class: "form-control w-25" %>
-      </div>
-      <div class="mb-3 d-flex">
-        <%= f.label :color , class: "form-label me-2"%>
-        <%= f.text_field :color, class: "form-control w-25" %>
-      </div>
-      <div class="mb-3 d-flex">
-        <%= f.label :milage , class: "form-label me-2"%>
-        <%= f.text_field :milage, class: "form-control w-25" %>
-      </div>
-      <div class="mb-3 d-flex">
-        <%= f.label :capacity , class: "form-label me-2"%>
-        <%= f.text_field :capacity, class: "form-control w-25" %>
-      </div>
-      <div class="mb-3 d-flex">
-        <%= f.label :assembly , class: "form-label me-2"%>
-        <%= f.select :assembly, Ad::ASSEMBLY, { include_blank: true }, class: "form-control w-25" %>
-      </div>
+      <%= link_to "Advanced filters", 'javascript:void(0)', class: 'btn btn-primary btn-lg btn-block me-3' , id: 'filter-button' %>
       <%= f.submit "Search", class: "btn btn-success btn-lg btn-block" %>
     <% end %>
   </div>
@@ -47,13 +50,15 @@
   </div>
   <div>
     <% @ads.each do |ad|%>
-      <div class="container d-flex mb-3 mt-3 border border-primary rounded">
-        <div class="img-title">
+      <div class="container d-flex mb-3 mt-3">
+        <div class="img-title border">
           <% if ad.images.any? %>
-            <%= image_tag ad.images.first , class: "img-title"%>
+            <%= image_tag ad.images.first, class: "img-title" %>
+          <% else %>
+          <p class="d-flex justify-content-center">No image provided!</p>
           <% end %>
         </div>
-        <div class="mt-3 ms-4 border border-primary">
+        <div class="mt-3 ms-4 detail-list">
           <% if ad.closed? %>
             <div>
               <p class="fw-bold text-danger ms-2">This Ad is Closed!</p>
@@ -67,9 +72,6 @@
           </span>
           <span class = "ms-2 me-2" >
             Email: <%= ad.user.email %>
-          </span>
-          <span class = "ms-2 me-2" >
-            Phone: <%= ad.user.phone %>
           </span><br>
           <span class="fw-bold ms-2 me-2">
             Make: <%= ad.make %>
@@ -91,7 +93,7 @@
             <%= ad.description %>
           </p>
         </div>
-        <div class="ms-5 mt-3 border border-primary buttons-div">
+        <div class="ms-5 mt-3 buttons-div">
           <%= link_to "Show", ad_path(ad), class: "btn btn-primary ms-2 me-2 mt-2 mb-2" %>
           <% if (user_signed_in? && current_user.favourite_ads.exists?(ad.id)) %>
             <%= link_to "Unfavourite", favourite_path(ad_id: ad), method: :delete, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
@@ -99,13 +101,13 @@
             <%= link_to "Favourite", favourite_path(ad_id: ad), method: :post, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
           <% end %>
           <% if ad.user == current_user %>
-              <%= link_to "Edit", edit_ad_path(ad), class: "btn btn-primary ms-2 me-2 mt-2 mb-2" %>
+            <%= link_to "Edit", edit_ad_path(ad), class: "btn btn-primary ms-2 me-2 mt-2 mb-2" %>
 
-              <%= link_to "Delete", ad_path(ad), method: :delete, class: "btn btn-danger ms-2 me-2 mt-2 mb-2" %>
+            <%= link_to "Delete", ad_path(ad), method: :delete, class: "btn btn-danger ms-2 me-2 mt-2 mb-2" %>
             <% if ad.closed? %>
-                <%= link_to "Activate", activate_ad_path(ad), method: :patch, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
+              <%= link_to "Activate", activate_ad_path(ad), method: :patch, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
             <% else %>
-                <%= link_to "close", deactivate_ad_path(ad), method: :patch, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
+              <%= link_to "close", deactivate_ad_path(ad), method: :patch, class: "btn btn-secondary ms-2 me-2 mt-2 mb-2" %>
             <% end %>
           <% end %>
         </div>
