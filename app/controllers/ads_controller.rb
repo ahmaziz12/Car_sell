@@ -15,7 +15,7 @@ class AdsController < ApplicationController
       @ads = Ad.active_ads
     end
     @ads = @ads.includes(:favourites, users: :favourite_ads)
-
+    @ads = AdSearchingService.new(params[:search], @ads).call if params[:search]
     @pagy, @ads = pagy(@ads)
   end
 
